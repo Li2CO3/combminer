@@ -2,11 +2,10 @@
 #define MAINWINDOW_H
 #include <QLabel>
 #include <QMainWindow>
-#include "calc.hpp"
 
 
 #define NTHREAD 4
-
+class Calc;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

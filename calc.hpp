@@ -2,6 +2,7 @@
 #define CALC
 //#include "qapplication.h"
 //#include <QDebug>
+#include "mainwindow.h"
 #include <QString>
 #include <QThread>
 #include <string>
@@ -57,10 +58,9 @@ inline void f(uint*&Ak, uint*&A306k, uint*& A317k, uint &Rx4, int k)
             auto Rx3=1566083941*Xor27(*Ak+*A306k+Rx4);
 
             *(A306k++)^=Rx3;
-            Rx4=Rx3-(k);
+            *(A317k++)^=(*(Ak++)=Rx4=Rx3-(k));
         }
-        *(A317k++)^=Rx4;
-    *(Ak++)=Rx4;
+//        *(A317k++)^=Rx4;
 }
 
 class Calc :public QThread
@@ -95,8 +95,8 @@ public:
     uint *const Ag = &A[G];
     uint *const A306g = &A[G-318];
     uint *const A317g =&A[G-307];//一堆后面用到的位置
-    uint *const A397 =&A[397];
-    uint *const A1 = &A[1];
+//    uint *const A397 =&A[397];
+//    uint *const A1 = &A[1];
 
     static_assert(624>=STRSIZE+1,"");
     //当string长度超过623时，mt的生成算法会变。
@@ -203,7 +203,7 @@ public:
                 if(next<0){
                     //DWORD endt=GetTickCount();
                     //qdebug()<<"\nruntime="<<(endt-startt)<<"ms"<<'\n';
-                    data613th[4]+=3;
+                    data613th[4]+=(NTHREAD-1);
                     if(data613th[4]>126)
                         for(int t=4;t<10;t++)data613th[t]=126;
                     emit Update_Progress(QString("")
